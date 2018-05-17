@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
+<title>Gestión de computo CRAL®</title>
     <head>
         <meta charset="utf-8">
 

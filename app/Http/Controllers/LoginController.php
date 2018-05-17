@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\User;
+
 
 class LoginController extends Controller {
 
@@ -28,7 +32,32 @@ class LoginController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function postLogin( Request $request) {
-        return redirect()->route('tecnicos');
+        try{
+              $credenciales = $request->only('email', 'password');
+              //$usuario = User::all()->where('email',$email);
+              if(Auth::attempt($credenciales)){
+
+
+              return redirect()->route('dashboard');
+            }
+        }catch(ModelNotFoundException $e){
+              Session::flash('flash_message', 'Error con correo o contraseña, valide las credenciales ingresadas');
+              return redirect()->back();
+        }
+
+
+    }
+
+    public function logout(){
+      if(Auth::check()){
+        Auth::logout();
+        Session::flash('flash_message', 'La sesión se cerró correctamente');
+        return redirect()->route('login');
+      }
+      else{
+        Session::flash('flash_message', 'Por favor inicie sesión antes.');
+        return redirect()->route('login');
+      }
     }
 
 }

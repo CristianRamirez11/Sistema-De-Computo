@@ -7,28 +7,35 @@
     @if($cliente)
     <h3>{{$cliente['nombre']}}</h3>
     <table class="table">
-        <thead class="thead-inverse">
-            <tr>
-                <th>Nombre</th>
-                <th>Identificación</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Actualizar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
-                <td>{{$cliente['nombre']}}</td>
-                <td>{{$cliente['identificacion']}}</td>
+                <td><h4>Nombre</h4></td>
+                <td>{{$cliente['name']}}</td>
+            </tr>
+            <tr>
+                <td>Identificación</td>
+                <td>{{$cliente['cedula']}}</td>
+            </tr>
+            <tr>
+                <td>Dirección</td>
                 <td>{{$cliente['direccion']}}</td>
+            </tr>
+            <tr>
+                <td>Teléfono</td>
                 <td>{{$cliente['telefono']}}</td>
-                <td><a class="btn btn-info" href="{{route('clientes.edit',"1")}}" role="button">Actualizar</a></td>
-                <td>{!! Form::open(['method' => 'POST', 'url' => 'clientes/delete/1']) !!}
-                        {{ method_field('delete') }}
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    {!! Form::close() !!}
-                </td>
+           </tr>
+            <tr>
+              @if(Auth::user()->rol=="Administrador")
+              <td><a class="btn btn-info" href="{{route('clientes.edit',$cliente['id'])}}" role="button">Actualizar</a></td>
+
+              <td>{!! Form::open([
+                  'method' => 'DELETE',
+                  'route' => ['clientes.destroy', $cliente['id']]
+                  ]) !!}
+                  {!! Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirm("¿Está seguro de eliminar el cliente?")']) !!}
+              {!! Form::close() !!}
+              </td>
+              @endif
             </tr>
         </tbody>
     </table>

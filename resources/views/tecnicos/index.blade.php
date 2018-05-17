@@ -4,37 +4,41 @@
 <div class="container">
     </br>
     </br>
-    <h3>Listado de técnicos</h3>
+    <h3>Listado de tecnicos</h3><br>
+    <p>para agregar un nuevo tecnico haga click <a href="{{url('tecnicos/create')}}">aquí</a></p>
+    @if(Session::has('flash_message'))
+        <article class="alert alert-success">
+              {{ Session::get('flash_message') }}
+        </article>
+
+    @endif
+
+
     <table class="table">
         <thead class="thead-inverse">
             <tr>
                 <th>#</th>
                 <th>Nombre</th>
                 <th>Identificación</th>
-                <th>Código</th>
+                <th>Dirección</th>
                 <th>Teléfono</th>
-                <th>Ver</th>
-                <th>Actualizar</th>
-                <th>Eliminar</th>
+                <th colspan="3">Opciones</th>
             </tr>
         </thead>
         <tbody>
-            @for ($i = 1; $i <= 10; $i++)
+            @foreach ($tecnicos as $tecnico)
             <tr>
-                <th scope="row">{{$i}}</th>
-                <td>Téncico {{$i}}</td>
-                <td>12345{{$i}}</td>
-                <td>ABC{{$i}}</td>
-                <td>7965{{$i}}</td>
-                <td><a class="btn btn-success" href="{{route('tecnicos.show',$i)}}" role="button">Ver</a></td>
-                <td><a class="btn btn-info" href="{{route('tecnicos.edit',$i)}}" role="button">Actualizar</a></td>
-                <td>{!! Form::open(['method' => 'POST', 'url' => 'tecnicos/delete/'.$i]) !!}
-                    {{ method_field('delete') }}
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                    {!! Form::close() !!}
-                </td>
+                <th scope="row">{{$tecnico['id']}}</th>
+                <td>{{$tecnico['name']}}</td>
+                <td>{{$tecnico['telefono']}}</td>
+                <td>{{$tecnico['direccion']}}</td>
+                <td>{{$tecnico['telefono']}}</td>
+                <td><a class="btn btn-success" href="{{route('tecnicos.show',$tecnico['id'])}}" role="button">Ver</a></td>
+                @if(Auth::user()->rol=="Administrador")
+                <td><a class="btn btn-info" href="{{route('tecnicos.edit',$tecnico['id'])}}" role="button">Actualizar</a></td>
+                @endif
             </tr>
-            @endfor
+            @endforeach
         </tbody>
     </table>
 </div>

@@ -3,13 +3,19 @@
 @section('content')
 <div class="container full-height centrado-vertical" >
     <h3 class="text-center">Inicio de sesión</h3>
+    @if(Session::has('flash_message'))
+        <article class="alert alert-success">
+              {{ Session::get('flash_message') }}
+        </article>
+
+    @endif
     <div class="row centrado-horizontal">
         <div class="col-6 align-self-center">
             <form class="form-horizontal " role="form" method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
 
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} ">
-                    
+
                         <label for="email" class="control-label">Correo electrónico</label>
 
                     <div class="col-12">

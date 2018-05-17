@@ -4,7 +4,16 @@
 <div class="container">
     </br>
     </br>
-    <h3>Listado de clientes</h3>
+    <h3>Listado de clientes</h3><br>
+    <p>para agregar un nuevo cliente haga click <a href="{{url('clientes/create')}}">aquí</a></p>
+    @if(Session::has('flash_message'))
+        <article class="alert alert-success">
+              {{ Session::get('flash_message') }}
+        </article>
+
+    @endif
+
+
     <table class="table">
         <thead class="thead-inverse">
             <tr>
@@ -13,28 +22,23 @@
                 <th>Identificación</th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
-                <th>Ver</th>
-                <th>Actualizar</th>
-                <th>Eliminar</th>
+                <th colspan="3">Opciones</th>
             </tr>
         </thead>
         <tbody>
-            @for ($i = 1; $i <= 10; $i++)
+            @foreach ($clientes as $cliente)
             <tr>
-                <th scope="row">{{$i}}</th>
-                <td>Cliente {{$i}}</td>
-                <td>12345{{$i}}</td>
-                <td>Calle 4{{$i}}</td>
-                <td>7965{{$i}}</td>
-                <td><a class="btn btn-success" href="{{route('clientes.show',$i)}}" role="button">Ver</a></td>
-                <td><a class="btn btn-info" href="{{route('clientes.edit',$i)}}" role="button">Actualizar</a></td>
-                <td>{!! Form::open(['method' => 'POST', 'url' => 'clientes/delete/'.$i]) !!}
-                    {{ method_field('delete') }}
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
-                    {!! Form::close() !!}
-                </td>
+                <th scope="row">{{$cliente['id']}}</th>
+                <td>{{$cliente['name']}}</td>
+                <td>{{$cliente['telefono']}}</td>
+                <td>{{$cliente['direccion']}}</td>
+                <td>{{$cliente['telefono']}}</td>
+                <td><a class="btn btn-success" href="{{route('clientes.show',$cliente['id'])}}" role="button">Ver</a></td>
+                @if(Auth::user()->rol=="Administrador")
+                <td><a class="btn btn-info" href="{{route('clientes.edit',$cliente['id'])}}" role="button">Actualizar</a></td>
+                @endif
             </tr>
-            @endfor
+            @endforeach
         </tbody>
     </table>
 </div>

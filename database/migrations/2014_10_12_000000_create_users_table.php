@@ -18,6 +18,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('cedula');
+            $table->string('direccion')->nullable();
+            $table->integer('telefono')->nullable();
+            $table->enum('rol',['Administrador','Tecnico','Cliente'])->default('Cliente');
             $table->rememberToken();
             $table->timestamps();
         });

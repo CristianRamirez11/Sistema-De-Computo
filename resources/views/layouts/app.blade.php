@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
+  <title>Gestión de computo CRAL®</title>
     <head>
         <meta charset="utf-8">
 
@@ -17,15 +18,16 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">Gestión de computo CRAL®</a>
+            <a class="navbar-brand" href="{{route('dashboard')}}">Gestión de computo CRAL®</a>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
+                  @if(Auth::user()->rol=="Administrador")
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="tecnicos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Técnicos</a>
                         <div class="dropdown-menu" aria-labelledby="tecnicos">
                             <a class="dropdown-item" href="{{route('tecnicos.create')}}">Crear técnico</a>
-                            <a class="dropdown-item" href="{{route('tecnicos')}}">Listar ténicos</a>
+                            <a class="dropdown-item" href="{{route('tecnicos.index')}}">Listar ténicos</a>
                             <a class="dropdown-item" href="{{route('tecnicos.search')}}">Buscar técnico</a>
                         </div>
                     </li>
@@ -33,21 +35,55 @@
                         <a class="nav-link dropdown-toggle"  id="equipos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Equipos</a>
                         <div class="dropdown-menu" aria-labelledby="equipos">
                             <a class="dropdown-item" href="{{route('equipos.create')}}">Crear equipo</a>
-                            <a class="dropdown-item" href="{{route('equipos')}}">Listar equipos</a>
+                            <a class="dropdown-item" href="{{route('equipos.index')}}">Listar equipos</a>
                             <a class="dropdown-item" href="{{route('equipos.search')}}">Buscar equipo</a>
                         </div>
                     </li>
+                    @endif
+                    @if(Auth::user()->rol == "Administrador" || Auth::user()->rol == "Tecnico")
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="informes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informes</a>
+                        <div class="dropdown-menu" aria-labelledby="informes">
+                        <a class="dropdown-item" href="{{route('mantenimientos.listMine', Auth::user()->id)}}">Ver mis informes</a>
+                        <a class="dropdown-item" href="{{route('mantenimientos.create')}}">Crear informe</a>
+                        <a class="dropdown-item" href="{{route('mantenimientos.index')}}">Ver informes</a>
+                       </div>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="clientes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes</a>
+
                         <div class="dropdown-menu" aria-labelledby="clientes">
+
+                          @if(Auth::user()->rol == "administrador")
                             <a class="dropdown-item" href="{{route('clientes.create')}}">Crear cliente</a>
-                            <a class="dropdown-item" href="{{route('clientes')}}">Listar clientes</a>
+                            @endif
+                            <a class="dropdown-item" href="{{route('clientes.index')}}">Listar clientes</a>
                             <a class="dropdown-item" href="{{route('clientes.search')}}">Buscar cliente</a>
+                        </div>
+                        @endif
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="solicitudes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Solicitudes</a>
+                        <div class="dropdown-menu" aria-labelledby="solicitudes">
+                          @if(Auth::user()->rol == "Cliente")
+                            <a class="dropdown-item" href="{{route('solicitudes.create')}}">Crear nueva solicitud</a>
+                            <a class="dropdown-item" href="{{route('solicitudes.listMine', Auth::user()->id)}}">Ver mis solicitudes</a>
+                            @endif
+                            <a class="dropdown-item" href="{{route('solicitudes.index')}}">Listar solicitudes</a>
+
                         </div>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-md-0">
-                    <a class="btn btn-outline-danger my-2 my-sm-0" role="button" href="{{route('login')}}">Cerrar sesión</a>
+                  @if(Auth::user()->rol == "Administrador")
+                    <a class="navbar-right" href="{{route('admin.edit', Auth::user()->id)}}">{{Auth::user()->name}} </a>
+                    @endif
+                    @if(Auth::user()->rol == "Tecnico")
+                      <a class="navbar-right" href="{{route('tecnicos.edit', Auth::user()->id)}}">{{Auth::user()->name}} </a>
+                      @endif
+                      @if(Auth::user()->rol == "Cliente")
+                        <a class="navbar-right" href="{{route('clientes.edit', Auth::user()->id)}}">{{Auth::user()->name}} </a>
+                        @endif
+                    <a class="btn btn-outline-danger my-2 my-sm-0" role="button" href="{{route('logout')}}">Cerrar sesión</a>
                 </form>
             </div>
         </nav>

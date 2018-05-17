@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Equipo;
+use Illuminate\Support\Facades\Session;
 class EquiposController extends Controller {
 
     /**
@@ -12,7 +13,7 @@ class EquiposController extends Controller {
      * @return void
      */
     public function __construct() {
-        
+       $this->middleware('auth');
     }
 
     /**
@@ -21,7 +22,8 @@ class EquiposController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('equipos.index');
+      $equipos = Equipo::all();
+        return view('equipos.index', ['equipos' => $equipos]);
     }
 
     /**
@@ -39,7 +41,21 @@ class EquiposController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        return redirect()->route('equipos');
+
+        $this->validate($request, [
+            'serial'=> 'required | integer',
+            'marca' => 'required | string | max:45',
+            'modelo'=> 'required | string | max:45',
+            'color' => 'required | string | max:45',
+            'capacidad_memoria_RAM' => 'required | string | max:45',
+            'capacidad_disco_duro' => 'required | string | max:45',
+            'tipo_computador' => 'required | string | max:45'
+        ]);
+
+        $input = $request->all();
+        Equipo::create($input);
+        Session::flash('flash_message', "se ha guardado el equipo correctamente");
+        return redirect()->route('equipos.index');
     }
 
     /**
@@ -48,9 +64,17 @@ class EquiposController extends Controller {
      * @param $id int identificador del equipo
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        $equipo = ['nombre' => 'Equipo 1', 'serial' => '12345', 'marca' => 'Mi marca', 'modelo' => 'Mi modelo', 'tipo' => 'Tipo 1'];
-        return view('equipos.show', ['equipo' => $equipo]);
+    public function show(Request $request, $id) {
+      try{
+            $equipo = Equipo::findOrFail($id);
+            return view('equipos.show', ['equipo' => $equipo]);
+      }catch(ModelNotFoundException $e){
+          Session::flash('flash_message',"El equipo no existe en la base de datos!");
+          return redirect()->back();
+      }
+
+        //$equipo = ['nombre' => 'Equipo 1', 'serial' => '12345', 'marca' => 'Mi marca', 'modelo' => 'Mi modelo', 'tipo' => 'Tipo 1'];
+
     }
 
     /**
@@ -59,8 +83,15 @@ class EquiposController extends Controller {
      * @param $id int identificador del equipo
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
-        return view('equipos.edit');
+    public function edit(Request $request,$id) {
+      try{
+            $equipo = Equipo::findOrFail($id);
+              return view('equipos.edit')->withequipo($equipo);
+      }catch(ModelNotFoundException $e){
+            Session::flash('flash_message',"El equipo no existe en la base de datos!");
+            return redirect()->back();
+      }
+
     }
 
     /**
@@ -71,17 +102,49 @@ class EquiposController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request) {
-        return redirect()->route('equipos');
+        try{
+            $equipo = Equipo::findOrFail($id);
+            $this->validate($request, [
+                'serial'=> 'required | integer',
+                'marca' => 'required | string | max:45',
+                'color' => 'required | string | max:45',
+                'capacidad_memoria_RAM' => 'required | string | max:45',
+                'capacidad_disco_duro' => 'required | string | max:45',
+                'tipo_computador' => 'required | string | max:45'
+            ]);
+            $input = $request->all();
+            $equipo->fill($input)->save();
+            Session::flash('flash_message', "El equipo se actualizó con éxito");
+            return redirect()->route('equipos.index');
+        }catch(ModelNotFoundException $e){
+          Session::flash('flash_message', "El equipo no existe en la base de datos");
+          return redirect()->route('equipos.index');
+        }
     }
 
     /**
-     * Elimina un quipo
+     * Elimina un equipo
      *
-     * @param $id int identificador del tecnico
+     * @param $id int identificador del equipo a eliminar
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        return redirect()->route('equipos');
+      try
+      {
+        $equipo= Equipo::findOrFail($id);
+
+        $equipo->delete();
+
+        Session::flash('flash_message', 'El equipo se ha eliminado exitosamente!');
+
+        return redirect()->route('equipos.index');
+      }
+      catch(ModelNotFoundException $e)
+      {
+        Session::flash('flash_message', "El equipo $id no fue eliminado, ha ocurrido un error");
+
+        return redirect()->back();
+      }
     }
 
     /**

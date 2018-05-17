@@ -4,27 +4,48 @@
 <div class="container">
     </br>
     </br>
-    <h3>Actualizar técnico</h3>
-    {!! Form::open(['method' => 'POST', 'url' => 'tecnicos/update/1']) !!}
-    {{ method_field('put') }}
+    <h3>Actualizar datos del tecnico</h3>
+    {!! Form::model($tecnico, [
+        'method' => 'PUT',
+        'route' => ['tecnicos.update', $tecnico->id]
+    ]) !!}
+    <div class="form-group">
+
+        {!! Form::label('nombre', 'Nombre', ['for' => 'name']) !!}
+        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    </div>
 
     <div class="form-group">
-        <label for="exampleInputEmail1">Nombre</label>
-        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Ingrese nombre">
+
+        {!! Form::label('email', 'Email', ['for' => 'email']) !!}
+        {!! Form::email('email', null, ['class' => 'form-control']) !!}
+    </div>
+
+    <div class="form-group">
+
+        {!! Form::label('direccion', 'Direccion', ['for' => 'direccion']) !!}
+        {!! Form::text('direccion', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group">
-        <label for="exampleInputEmail1">Identificación</label>
-        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Ingrese identificación">
+
+        {!! Form::label('cedula', 'Cedula', ['for' => 'cedula']) !!}
+        {!! Form::text('cedula', null, ['class' => 'form-control']) !!}
     </div>
+
     <div class="form-group">
-        <label for="exampleInputEmail1">Código</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Ingrese código">
+
+        {!! Form::label('telefono', 'Telefono', ['for' => 'telefono']) !!}
+        {!! Form::tel('telefono', null, ['class' => 'form-control']) !!}
     </div>
+
+
     <div class="form-group">
-        <label for="exampleInputEmail1">Teléfono</label>
-        <input type="text" class="form-control"  placeholder="Ingrese teléfono">
+      <!--{!! Form::label('Privilegios', 'Privilegios', ['for' => 'rol']) !!}-->
+      {!! Form::hidden('rol', 'Tecnico') !!}
     </div>
-    <button type="submit" class="btn btn-success">Actualizar</button>
+
+    {!! Form::submit('Actualizar tecnico', ['class' => 'btn btn-primary']) !!}
+    <a href="{{ url('tecnicos') }}" class="btn btn-info">Cancelar</a>
     {!! Form::close() !!}
 </div>
 @endsection

@@ -19,16 +19,20 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{$tecnico['nombre']}}</td>
-                <td>{{$tecnico['identificacion']}}</td>
-                <td>{{$tecnico['codigo']}}</td>
+                <td>{{$tecnico['name']}}</td>
+                <td>{{$tecnico['cedula']}}</td>
+                <td>{{$tecnico['id']}}</td>
                 <td>{{$tecnico['telefono']}}</td>
-                <td><a class="btn btn-info" href="{{route('tecnicos.edit',"1")}}" role="button">Actualizar</a></td>
-                <td>{!! Form::open(['method' => 'POST', 'url' => 'tecnicos/delete/1']) !!}
-                        {{ method_field('delete') }}
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    {!! Form::close() !!}
+                @if(Auth::user()->rol=="Administrador")
+                <td><a class="btn btn-info" href="{{route('tecnicos.edit',$tecnico->id)}}" role="button">Actualizar</a></td>
+                <td>{!! Form::open([
+                    'method' => 'DELETE',
+                    'route' => ['tecnicos.destroy', $tecnico['id']]
+                    ]) !!}
+                    {!! Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirm("¿Está seguro de eliminar el técnico?")']) !!}
+                {!! Form::close() !!}
                 </td>
+                @endif
             </tr>
         </tbody>
     </table>
