@@ -32,7 +32,8 @@ class EquiposController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('equipos.create');
+      $clientes = User::all()->where('rol','Cliente')->pluck('id','name');
+        return view('equipos.create')->withclientes($clientes);
     }
 
     /**

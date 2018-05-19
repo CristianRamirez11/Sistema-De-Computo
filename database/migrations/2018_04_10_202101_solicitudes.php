@@ -18,6 +18,8 @@ class Solicitudes extends Migration
             $table->increments('id');
             $table->unsignedInteger('idCliente');
             $table->unsignedInteger('idEquipo');
+            $table->unsignedInteger('idMantenimiento')->nullable();
+            $table->Enum('estado', ['pendiente', 'atendida'])->default('pendiente');
             $table->date('fecha');
             $table->dateTime('hora');
             $table->string('descripcion');
@@ -28,6 +30,9 @@ class Solicitudes extends Migration
         Schema::table('solicituds', function (Blueprint $table){
           $table->foreign('idEquipo')
           ->references('id')->on('equipos')
+          ->onDelete('cascade');
+          $table->foreign('id')
+          ->references('id')->on('mantenimientos')
           ->onDelete('cascade');
           $table->foreign('idCliente')
           ->references('id')->on('users')
@@ -43,6 +48,6 @@ class Solicitudes extends Migration
     public function down()
     {
         //
-        Schema::drop('solicitudes');
+        Schema::drop('solicituds');
     }
 }

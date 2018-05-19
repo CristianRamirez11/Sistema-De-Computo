@@ -6,23 +6,26 @@
     </br>
     @if($usuario)
     <h3>{{$usuario['nombre']}}</h3>
-    <table class="table">
-        <thead class="thead-inverse">
-            <tr>
-                <th>Nombre</th>
-                <th>Identificación</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Actualizar</th>
-                <th>Eliminar</th>
-            </tr>
-        </thead>
+    <table class="table table-striped">
+
         <tbody>
             <tr>
+                <td>Nombre:</td>
                 <td>{{$usuario['name']}}</td>
+            </tr>
+            <tr>
+                <td>Doc. Identidad:</td>
                 <td>{{$usuario['cedula']}}</td>
+            </tr>
+            <tr>
+                <td>Dirección:</td>
                 <td>{{$usuario['direccion']}}</td>
+            </tr>
+            <tr>
+                <td>Telefono:</td>
                 <td>{{$usuario['telefono']}}</td>
+            </tr>
+            <tr>
                 <td><a class="btn btn-info" href="{{route('admin.edit',$usuario['id'])}}" role="button">Actualizar</a></td>
                 <td>{!! Form::open([
                     'method' => 'DELETE',

@@ -16,6 +16,7 @@ class Equipos extends Migration
         //
         Schema::create('equipos', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('idCliente');
             $table->integer('serial')->unique();
             $table->string('marca');
             $table->string('modelo');
@@ -24,6 +25,12 @@ class Equipos extends Migration
             $table->string('capacidad_disco_duro');
             $table->string('tipo_computador');
             $table->timestamps();
+        });
+
+        Schema::table('equipos', function (Blueprint $table){
+          $table->foreign('idCliente')
+          ->references('id')->on('users')
+          ->onDelete('cascade');
         });
     }
 
