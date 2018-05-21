@@ -44,8 +44,10 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="informes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informes</a>
                         <div class="dropdown-menu" aria-labelledby="informes">
+                        @if(Auth::user()->rol == "Tecnico")
                         <a class="dropdown-item" href="{{route('mantenimientos.listMine', Auth::user()->id)}}">Ver mis informes</a>
                         <a class="dropdown-item" href="{{route('mantenimientos.create')}}">Crear informe</a>
+                        @endif
                         <a class="dropdown-item" href="{{route('mantenimientos.index')}}">Ver informes</a>
                        </div>
                     <li class="nav-item dropdown">
@@ -62,16 +64,19 @@
                         @endif
                     </li>
                     <li class="nav-item dropdown">
+                      @if(Auth::user()->rol == "Administrador" ||Auth::user()->rol == "Cliente" )
                         <a class="nav-link dropdown-toggle"  id="solicitudes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Solicitudes</a>
                         <div class="dropdown-menu" aria-labelledby="solicitudes">
                           @if(Auth::user()->rol == "Cliente")
                             <a class="dropdown-item" href="{{route('solicitudes.create')}}">Crear nueva solicitud</a>
                             <a class="dropdown-item" href="{{route('solicitudes.listMine', Auth::user()->id)}}">Ver mis solicitudes</a>
                             @endif
+                          @if(Auth::user()->rol == "Administrador")
                             <a class="dropdown-item" href="{{route('solicitudes.index')}}">Listar solicitudes</a>
-
+                            @endif
                         </div>
                     </li>
+                    @endif
                 </ul>
                 <form class="form-inline my-2 my-md-0">
                   @if(Auth::user()->rol == "Administrador")

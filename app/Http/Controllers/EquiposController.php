@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Equipo;
+use App\User;
 use Illuminate\Support\Facades\Session;
 class EquiposController extends Controller {
 
@@ -26,13 +27,18 @@ class EquiposController extends Controller {
         return view('equipos.index', ['equipos' => $equipos]);
     }
 
+    public function listMine($idCliente){
+        $equipos = Equipo::all()->where('idCliente',$idCliente);
+        return view('equipos.index', ['equipos' => $equipos]);
+    }
+
     /**
      * Obtiene la vista para crear un equipo
      *
      * @return \Illuminate\Http\Response
      */
     public function create() {
-      $clientes = User::all()->where('rol','Cliente')->pluck('id','name');
+      $clientes = User::all()->where('rol','Cliente')->pluck('name','id');
         return view('equipos.create')->withclientes($clientes);
     }
 
@@ -42,15 +48,16 @@ class EquiposController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-
+      //dd($request);
         $this->validate($request, [
-            'serial'=> 'required | integer',
-            'marca' => 'required | string | max:45',
-            'modelo'=> 'required | string | max:45',
-            'color' => 'required | string | max:45',
+            'serial'   => 'required | integer',
+            'idCliente'=>'required | integer',
+            'marca'    => 'required | string | max:45',
+            'modelo'   => 'required | string | max:45',
+            'color'    => 'required | string | max:45',
             'capacidad_memoria_RAM' => 'required | string | max:45',
-            'capacidad_disco_duro' => 'required | string | max:45',
-            'tipo_computador' => 'required | string | max:45'
+            'capacidad_disco_duro'  => 'required | string | max:45',
+            'tipo_computador'       => 'required | string | max:45'
         ]);
 
         $input = $request->all();
@@ -68,7 +75,8 @@ class EquiposController extends Controller {
     public function show(Request $request, $id) {
       try{
             $equipo = Equipo::findOrFail($id);
-            return view('equipos.show', ['equipo' => $equipo]);
+            $cliente = User::findOrFail($equipo->idCliente);
+            return view('equipos.show', ['equipo' => $equipo, 'cliente' => $cliente]);
       }catch(ModelNotFoundException $e){
           Session::flash('flash_message',"El equipo no existe en la base de datos!");
           return redirect()->back();
@@ -87,6 +95,7 @@ class EquiposController extends Controller {
     public function edit(Request $request,$id) {
       try{
             $equipo = Equipo::findOrFail($id);
+            $clientes = Users::all()->where('rol', 'Cliente')->pluck('name','id');
               return view('equipos.edit')->withequipo($equipo);
       }catch(ModelNotFoundException $e){
             Session::flash('flash_message',"El equipo no existe en la base de datos!");
@@ -107,6 +116,7 @@ class EquiposController extends Controller {
             $equipo = Equipo::findOrFail($id);
             $this->validate($request, [
                 'serial'=> 'required | integer',
+                'idCliente'=> 'required | integer',
                 'marca' => 'required | string | max:45',
                 'color' => 'required | string | max:45',
                 'capacidad_memoria_RAM' => 'required | string | max:45',

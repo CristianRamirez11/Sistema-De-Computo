@@ -19,6 +19,7 @@
         <input type="text" class="form-control" id=""  placeholder="Ingrese nombre">
     </div>
   -->
+
     <div class="form-group">
       <?php echo Form::label('serial', 'Serial', ['for' => 'serial']); ?>
 
@@ -26,6 +27,20 @@
 
         <!--<label for="exampleInputEmail1">Serial</label>
         <input type="number" class="form-control" id="serial"  placeholder="Ingrese serial">
+      -->
+    </div>
+    <div class="form-group">
+      <?php echo Form::label('idCliente', 'Dueño del equipo', ['for' => 'idCliente']); ?>
+
+      <?php echo Form::select('idCliente',$clientes); ?>
+
+      <!--
+        <label for="exampleInputEmail1">Tipo</label>
+        <select class="form-control" id="tipo_computador" name="tipo_computador">
+            <option>Laptop</option>
+            <option>Notebook</option>
+            <option>Escritorio</option>
+        </select>
       -->
     </div>
     <div class="form-group">

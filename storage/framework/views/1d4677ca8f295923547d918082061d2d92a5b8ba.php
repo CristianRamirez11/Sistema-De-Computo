@@ -21,17 +21,19 @@
                 <td><?php echo e($tecnico['cedula']); ?></td>
                 <td><?php echo e($tecnico['id']); ?></td>
                 <td><?php echo e($tecnico['telefono']); ?></td>
+                <?php if(Auth::user()->rol=="Administrador"): ?>
                 <td><a class="btn btn-info" href="<?php echo e(route('tecnicos.edit',$tecnico->id)); ?>" role="button">Actualizar</a></td>
                 <td><?php echo Form::open([
                     'method' => 'DELETE',
                     'route' => ['tecnicos.destroy', $tecnico['id']]
                     ]); ?>
 
-                    <?php echo Form::submit('Eliminar', ['class' => 'btn btn-danger']); ?>
+                    <?php echo Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirm("¿Está seguro de eliminar el técnico?")']); ?>
 
                 <?php echo Form::close(); ?>
 
                 </td>
+                <?php endif; ?>
             </tr>
         </tbody>
     </table>

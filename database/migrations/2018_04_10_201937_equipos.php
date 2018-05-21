@@ -17,7 +17,7 @@ class Equipos extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('idCliente');
-            $table->integer('serial')->unique();
+            $table->integer('serial');
             $table->string('marca');
             $table->string('modelo');
             $table->string('color');

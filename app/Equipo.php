@@ -10,6 +10,7 @@ class Equipo extends Model
 
     protected $fillable = [
       'serial',
+      'idCliente',
       'marca',
       'modelo',
       'color',

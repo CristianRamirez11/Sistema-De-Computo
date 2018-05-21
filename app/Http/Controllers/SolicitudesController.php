@@ -36,6 +36,18 @@ class SolicitudesController extends Controller
       return view('solicitudes.listMine', ['solicitudes' => $solicitudes]);
   }
 
+  public function verSolicitudesEquipo($idEquipo){
+    try{
+    $solicitudes = Solicitud::all()->where('idEquipo','=',$idEquipo);
+    $equipo = Equipo::findOrFail($idEquipo);
+    return view('solicitudes.solicitudesEquipo', ['solicitudes' => $solicitudes, 'equipo' => $equipo]);
+  }catch(ModelNotFoundException $e){
+    Session::flash('flash_message','Ha ocurrido un problema al buscar las solictudes del equipo seleccionado');
+    return redirect()->back();
+  }
+
+  }
+
   /**
    * Obtiene la vista para crear un solicitud
    *

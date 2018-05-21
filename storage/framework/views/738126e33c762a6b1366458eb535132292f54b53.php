@@ -44,8 +44,10 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="informes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Informes</a>
                         <div class="dropdown-menu" aria-labelledby="informes">
+                        <?php if(Auth::user()->rol == "Tecnico"): ?>
                         <a class="dropdown-item" href="<?php echo e(route('mantenimientos.listMine', Auth::user()->id)); ?>">Ver mis informes</a>
                         <a class="dropdown-item" href="<?php echo e(route('mantenimientos.create')); ?>">Crear informe</a>
+                        <?php endif; ?>
                         <a class="dropdown-item" href="<?php echo e(route('mantenimientos.index')); ?>">Ver informes</a>
                        </div>
                     <li class="nav-item dropdown">
@@ -62,16 +64,19 @@
                         <?php endif; ?>
                     </li>
                     <li class="nav-item dropdown">
+                      <?php if(Auth::user()->rol == "Administrador" ||Auth::user()->rol == "Cliente" ): ?>
                         <a class="nav-link dropdown-toggle"  id="solicitudes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Solicitudes</a>
                         <div class="dropdown-menu" aria-labelledby="solicitudes">
                           <?php if(Auth::user()->rol == "Cliente"): ?>
                             <a class="dropdown-item" href="<?php echo e(route('solicitudes.create')); ?>">Crear nueva solicitud</a>
                             <a class="dropdown-item" href="<?php echo e(route('solicitudes.listMine', Auth::user()->id)); ?>">Ver mis solicitudes</a>
                             <?php endif; ?>
+                          <?php if(Auth::user()->rol == "Administrador"): ?>
                             <a class="dropdown-item" href="<?php echo e(route('solicitudes.index')); ?>">Listar solicitudes</a>
-
+                            <?php endif; ?>
                         </div>
                     </li>
+                    <?php endif; ?>
                 </ul>
                 <form class="form-inline my-2 my-md-0">
                   <?php if(Auth::user()->rol == "Administrador"): ?>

@@ -6,7 +6,13 @@
     </br>
     <h2>Bienvenido a CRAL, {{Auth::user()->name}}</h2><br>
     <h3><p>A continuación encontrará las opciones disponibles del sistema:</p></h3>
-    <table class="table">
+    @if(Session::has('flash_message'))
+        <article class="alert alert-success">
+              {{ Session::get('flash_message') }}
+        </article>
+
+    @endif  
+    <table class="table table-responsive">
         <thead class="thead-inverse">
             <tr>
               <th>Usuarios</th>

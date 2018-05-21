@@ -50,6 +50,7 @@ Route::get('/equipos/edit/{id}', 'EquiposController@edit')->name('equipos.edit')
 Route::put('/equipos/update/{id}', 'EquiposController@update')->name('equipos.update');
 Route::get('/equipos/{id}', 'EquiposController@show')->name('equipos.show');*/
 Route::resource('equipos', 'EquiposController');
+Route::get('/equipos/mis/{id}','EquiposController@listMine')->name('equipos.listMine');
 Route::get('/equipos/search/codigo', 'EquiposController@search')->name('equipos.search');
 Route::post('/equipos/search/codigo', 'EquiposController@postSearch')->name('equipos.postSearch');
 //Route::delete('/equipos/delete/{id}', 'EquiposController@destroy')->name('equipos.delete');

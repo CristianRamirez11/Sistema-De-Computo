@@ -5,7 +5,7 @@
     <?php if($equipo): ?>
     <h3>Equipo: <?php echo e($equipo['modelo']); ?></h3>
     <table class="table">
-
+        <tbody>
             <tr>
                 <td>Serial</td>
                   <td><?php echo e($equipo['serial']); ?></td>

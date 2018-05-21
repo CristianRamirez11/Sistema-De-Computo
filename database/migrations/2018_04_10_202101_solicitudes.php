@@ -18,6 +18,7 @@ class Solicitudes extends Migration
             $table->increments('id');
             $table->unsignedInteger('idCliente');
             $table->unsignedInteger('idEquipo');
+            $table->unsignedInteger('idTecnico');
             $table->unsignedInteger('idMantenimiento')->nullable();
             $table->Enum('estado', ['pendiente', 'atendida'])->default('pendiente');
             $table->date('fecha');
@@ -35,6 +36,9 @@ class Solicitudes extends Migration
           ->references('id')->on('mantenimientos')
           ->onDelete('cascade');
           $table->foreign('idCliente')
+          ->references('id')->on('users')
+          ->onDelete('cascade');
+          $table->foreign('idTecnico')
           ->references('id')->on('users')
           ->onDelete('cascade');
         });

@@ -36,6 +36,11 @@ class MantenimientoController extends Controller
         return view('mantenimientos.index', ['mantenimientos' => $mantenimientos]);
     }
 
+    public function verMantenimientosEquipo($idEquipo){
+      $mantenimientos = Mantenimiento::all()->where('idEquipo', $idEquipo);
+      return view('mantenimientos.index', ['mantenimientos' => $mantenimientos]);
+    }
+
     /**
      * Obtiene la vista para crear un mantenimiento
      *
