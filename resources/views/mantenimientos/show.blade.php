@@ -40,9 +40,21 @@
             </tr>
         </tbody>
     </table>
+    @if(Auth::user()->rol == "Administrador")
     <div class="container">
       <a href="{{ route('mantenimientos.index') }}" class="btn btn-primary btn-block" role="button">Volver a la lista</a>
     </div>
+    @endif
+    @if(Auth::user()->rol == "Cliente")
+    <div class="container">
+      <a href="{{ route('solicitudes.show', $mantenimiento->codigo) }}" class="btn btn-primary btn-block" role="button">Volver a la solicitud</a>
+    </div>
+    @endif
+    @if(Auth::user()->rol == "Tecnico")
+    <div class="container">
+      <a href="{{ route('mantenimientos.listMine', Auth::user()->id) }}" class="btn btn-primary btn-block" role="button">Volver a la lista</a>
+    </div>
+    @endif
     @endif
 </div>
 @endsection

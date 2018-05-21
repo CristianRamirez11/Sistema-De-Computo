@@ -8,6 +8,8 @@ use App\Mantenimiento;
 use App\Equipo;
 use App\User;
 use App\Solicitud;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MantenimientoController extends Controller
 {
@@ -49,7 +51,7 @@ class MantenimientoController extends Controller
     public function create() {
       try{
         $equipos = Equipo::pluck('modelo','id')->all();
-        $solicitudes = Solicitud::pluck('descripcion','id')->all();
+        $solicitudes = Solicitud::all()->where('idTecnico',Auth::user()->id)->pluck('descripcion','id');
           return view('mantenimientos.create')->withequipos($equipos)->withsolicitudes($solicitudes);
       }catch(ModelNotFoundException $e){
 
@@ -69,14 +71,17 @@ class MantenimientoController extends Controller
             'codigo'=> 'required | integer',
             'fecha'=> 'required | date',
             'hora' => 'required | string | max:45',
-            'descripcion' => 'required | string | max:45',
+            'descripcion' => 'required | string | max:255',
             'estado' => 'required | string | max:45',
             'tipo_de_mantenimiento' => 'required | string | max:45'
         ]);
 
         $input = $request->all();
 
-        Mantenimiento::create($input);
+        $mantenimiento=Mantenimiento::create($input);
+        DB::table('solicituds')
+        ->where('idTecnico',Auth::user()->id)
+        ->update(['idMantenimiento' => $mantenimiento->id]);
         Session::flash('flash_message', "se ha guardado el informe correctamente");
         return redirect()->route('mantenimientos.index');
     }

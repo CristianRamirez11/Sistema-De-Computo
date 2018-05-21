@@ -11,6 +11,8 @@ class Solicitud extends Model
     protected $fillable = [
       'idCliente',
       'idEquipo',
+      'idTecnico',
+      'estado',
       'fecha',
       'hora',
       'descripcion'

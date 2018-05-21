@@ -48,19 +48,23 @@
                         <a class="dropdown-item" href="{{route('mantenimientos.listMine', Auth::user()->id)}}">Ver mis informes</a>
                         <a class="dropdown-item" href="{{route('mantenimientos.create')}}">Crear informe</a>
                         @endif
+                        @if(Auth::user()->rol == "Administrador")
                         <a class="dropdown-item" href="{{route('mantenimientos.index')}}">Ver informes</a>
+                        @endif
                        </div>
+                    @if(Auth::user()->rol == "administrador")
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="clientes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes</a>
 
                         <div class="dropdown-menu" aria-labelledby="clientes">
 
-                          @if(Auth::user()->rol == "administrador")
+
                             <a class="dropdown-item" href="{{route('clientes.create')}}">Crear cliente</a>
-                            @endif
+
                             <a class="dropdown-item" href="{{route('clientes.index')}}">Listar clientes</a>
                             <a class="dropdown-item" href="{{route('clientes.search')}}">Buscar cliente</a>
                         </div>
+                      @endif
                         @endif
                     </li>
                     <li class="nav-item dropdown">

@@ -5,19 +5,31 @@
     </br>
     </br>
     @if($equipo)
-    <h3>Equipo: {{$equipo['modelo']}}</h3>
     <table class="table">
+      <thead class="thead-inverse">
+          <tr>
+              <th colspan="8"><h3>Equipo: {{$equipo['modelo']}}</h3></th>
+
+          </tr>
+      </thead>
         <tbody>
             <tr>
-                <td>Serial</td>
-                  <td>{{$equipo['serial']}}</td>
-            </tr>
-                <th>Marca</th>
-                <th>Tipo</th>
-
+                <td><h4>Serial</h4></td>
                 <td>{{$equipo['serial']}}</td>
+            </tr>
+            <tr>
+                <th><h4>Marca</h4></th>
                 <td>{{$equipo['marca']}}</td>
+            </tr>
+            <tr>
+                <th><h4>Tipo</h4></th>
                 <td>{{$equipo['tipo_computador']}}</td>
+            </tr>
+            <tr>
+                <th><h4>Pertnece a:</h4></th>
+                <td>{{$cliente['name']}}</td>
+            </tr>
+                <tr>
                 <td><a class="btn btn-info" href="{{route('equipos.edit',$equipo['id'])}}" role="button">Actualizar</a></td>
                 @if(Auth::user()->rol=="Administrador")
                 <td>{!! Form::open([
@@ -30,6 +42,14 @@
             </tr>
         </tbody>
     </table>
+    @if(Auth::user()->rol=="Administrador")
+    <div class="container">
+      <a href="{{ route('equipos.index') }}" class="btn btn-primary btn-block" role="button">Volver a la lista</a>
+    </div>
+    @endif
+    <div class="container">
+      <a href="{{ route('equipos.listMine', Auth::user()->id) }}" class="btn btn-primary btn-block" role="button">Volver a la lista</a>
+    </div>
     @endif
 </div>
 @endsection

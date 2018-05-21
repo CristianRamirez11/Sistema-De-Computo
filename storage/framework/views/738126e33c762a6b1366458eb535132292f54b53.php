@@ -48,19 +48,23 @@
                         <a class="dropdown-item" href="<?php echo e(route('mantenimientos.listMine', Auth::user()->id)); ?>">Ver mis informes</a>
                         <a class="dropdown-item" href="<?php echo e(route('mantenimientos.create')); ?>">Crear informe</a>
                         <?php endif; ?>
+                        <?php if(Auth::user()->rol == "Administrador"): ?>
                         <a class="dropdown-item" href="<?php echo e(route('mantenimientos.index')); ?>">Ver informes</a>
+                        <?php endif; ?>
                        </div>
+                    <?php if(Auth::user()->rol == "administrador"): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="clientes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes</a>
 
                         <div class="dropdown-menu" aria-labelledby="clientes">
 
-                          <?php if(Auth::user()->rol == "administrador"): ?>
+
                             <a class="dropdown-item" href="<?php echo e(route('clientes.create')); ?>">Crear cliente</a>
-                            <?php endif; ?>
+
                             <a class="dropdown-item" href="<?php echo e(route('clientes.index')); ?>">Listar clientes</a>
                             <a class="dropdown-item" href="<?php echo e(route('clientes.search')); ?>">Buscar cliente</a>
                         </div>
+                      <?php endif; ?>
                         <?php endif; ?>
                     </li>
                     <li class="nav-item dropdown">

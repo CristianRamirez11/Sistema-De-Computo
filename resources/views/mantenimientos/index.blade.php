@@ -5,8 +5,9 @@
     </br>
     </br>
     <h3>Listado de mantenimientos</h3><br>
+    @if(Auth::user()->rol == "Tecnico")
     <p>para agregar un nuevo mantenimiento haga click <a href="{{url('mantenimientos/create')}}">aquí</a></p>
-
+    @endif
     <table class="table">
         <thead class="thead-inverse">
             <tr>
@@ -25,9 +26,9 @@
                 <td>{{$mantenimiento->fecha}}</td>
                 <td>{{$mantenimiento->tipo_de_mantenimiento}}</td>
                 <td><a class="btn btn-success" href="{{route('mantenimientos.show',$mantenimiento->id)}}" role="button">Ver</a></td>
-                @if(Auth::user()->rol=="Administrador")
+
                 <td><a class="btn btn-info" href="{{route('mantenimientos.edit',$mantenimiento->id)}}" role="button">Actualizar</a></td>
-                @endif
+                
             </tr>
             @endforeach
         </tbody>

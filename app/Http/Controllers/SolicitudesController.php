@@ -32,8 +32,18 @@ class SolicitudesController extends Controller
   }
 
   public function listMine($id) {
-    $solicitudes = Solicitud::all()->where('idCliente', '=', $id);
-      return view('solicitudes.listMine', ['solicitudes' => $solicitudes]);
+      $solicitudes = Solicitud::all()->where('idCliente', '=', $id);
+        return view('solicitudes.listMine', ['solicitudes' => $solicitudes]);
+  }
+
+  public function asignarTecnico($idSolicitud){
+      $solicitud = Solicitud::findOrFail($idSolicitud);
+      $equipo = Equipo::findOrFail($solicitud->idEquipo);
+      $tecnicos = User::all()->where('rol', '=', 'Tecnico')->pluck('name','id');
+      $cliente = User::findOrFail($solicitud->idCliente);
+
+        return view('solicitudes.asignarTecnico', ['solicitud' => $solicitud,
+        'equipo' => $equipo, 'tecnicos' => $tecnicos, 'cliente' => $cliente]);
   }
 
   public function verSolicitudesEquipo($idEquipo){
@@ -105,7 +115,9 @@ class SolicitudesController extends Controller
     try{
           $solicitud = Solicitud::findOrFail($id);
           $equipo = Equipo::findOrFail($solicitud['idEquipo']);
-          return view('solicitudes.show', ['solicitud' => $solicitud])->withequipo($equipo);
+          $tecnico = User::findOrFail($solicitud->idTecnico);
+          return view('solicitudes.show', ['solicitud' => $solicitud])
+          ->withequipo($equipo)->withtecnico($tecnico);
     }catch(ModelNotFoundException $e){
         Session::flash('flash_message',"El solicitud no existe en la base de datos!");
         return redirect()->back();

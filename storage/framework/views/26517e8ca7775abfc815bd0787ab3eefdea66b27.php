@@ -26,22 +26,36 @@
                 <td><?php echo e($mantenimiento['descripcion']); ?></td>
                 <td><?php echo e($mantenimiento['hora']); ?></td>
                 <td><a class="btn btn-info" href="<?php echo e(route('mantenimientos.edit',$mantenimiento['id'])); ?>" role="button">Actualizar</a></td>
+                <?php if(Auth::user()->rol=="Administrador"): ?>
                 <td><?php echo Form::open([
                     'method' => 'DELETE',
                     'route' => ['mantenimientos.destroy', $mantenimiento['id']]
                     ]); ?>
 
-                    <?php echo Form::submit('Eliminar', ['class' => 'btn btn-danger']); ?>
+                    <?php echo Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirm("¿Está seguro de eliminar el informe?")']); ?>
 
                 <?php echo Form::close(); ?>
 
                 </td>
+                <?php endif; ?>
             </tr>
         </tbody>
     </table>
+    <?php if(Auth::user()->rol == "Administrador"): ?>
     <div class="container">
       <a href="<?php echo e(route('mantenimientos.index')); ?>" class="btn btn-primary btn-block" role="button">Volver a la lista</a>
     </div>
+    <?php endif; ?>
+    <?php if(Auth::user()->rol == "Cliente"): ?>
+    <div class="container">
+      <a href="<?php echo e(route('solicitudes.show', $mantenimiento->codigo)); ?>" class="btn btn-primary btn-block" role="button">Volver a la solicitud</a>
+    </div>
+    <?php endif; ?>
+    <?php if(Auth::user()->rol == "Tecnico"): ?>
+    <div class="container">
+      <a href="<?php echo e(route('mantenimientos.listMine', Auth::user()->id)); ?>" class="btn btn-primary btn-block" role="button">Volver a la lista</a>
+    </div>
+    <?php endif; ?>
     <?php endif; ?>
 </div>
 <?php $__env->stopSection(); ?>

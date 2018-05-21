@@ -13,6 +13,15 @@
         </article>
 
     @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     {!! Form::open(['route' => 'mantenimientos.store']) !!}
 
     <div class="form-group">
@@ -23,7 +32,7 @@
 
     <div class="form-group">
       {!! Form::label('codigo', 'Solicitud', ['for' => 'codigo']) !!}
-      {!! Form::select('idSolicitud',$solicitudes)!!}
+      {!! Form::select('codigo',$solicitudes)!!}
         <!--<label for="exampleInputEmail1">codigo</label>
         <input type="number" class="form-control" id="codigo"  placeholder="Ingrese codigo">
       -->

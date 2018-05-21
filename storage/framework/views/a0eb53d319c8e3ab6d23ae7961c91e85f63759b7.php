@@ -3,8 +3,9 @@
     </br>
     </br>
     <h3>Listado de mantenimientos</h3><br>
+    <?php if(Auth::user()->rol == "Tecnico"): ?>
     <p>para agregar un nuevo mantenimiento haga click <a href="<?php echo e(url('mantenimientos/create')); ?>">aquí</a></p>
-
+    <?php endif; ?>
     <table class="table">
         <thead class="thead-inverse">
             <tr>
@@ -23,9 +24,9 @@
                 <td><?php echo e($mantenimiento->fecha); ?></td>
                 <td><?php echo e($mantenimiento->tipo_de_mantenimiento); ?></td>
                 <td><a class="btn btn-success" href="<?php echo e(route('mantenimientos.show',$mantenimiento->id)); ?>" role="button">Ver</a></td>
-                <?php if(Auth::user()->rol=="Administrador"): ?>
+
                 <td><a class="btn btn-info" href="<?php echo e(route('mantenimientos.edit',$mantenimiento->id)); ?>" role="button">Actualizar</a></td>
-                <?php endif; ?>
+                
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>

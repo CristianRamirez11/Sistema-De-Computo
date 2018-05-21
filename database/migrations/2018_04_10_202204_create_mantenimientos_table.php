@@ -16,8 +16,8 @@ class CreateMantenimientosTable extends Migration
         Schema::create('mantenimientos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('idEquipo');
-            $table->unsignedInteger('idTecnico')->nullable();
-            $table->integer('codigo');
+            $table->unsignedInteger('idTecnico');
+            $table->unsignedInteger('codigo');
             $table->date('fecha');
             $table->dateTime('hora');
             $table->enum('tipo_de_mantenimiento',['preventivo','correctivo']);
@@ -34,6 +34,10 @@ class CreateMantenimientosTable extends Migration
           $table->foreign('idTecnico')
           ->references('id')->on('users')
           ->onDelete('cascade');
+          $table->foreign('codigo')
+          ->references('id')->on('solicituds')
+          ->onDelete('cascade');
+
         });
 
 

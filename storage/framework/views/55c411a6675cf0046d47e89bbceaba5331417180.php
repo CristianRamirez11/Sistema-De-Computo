@@ -18,6 +18,7 @@
         <thead class="thead-inverse">
             <tr>
                 <th>#</th>
+                <th>Descripcion</th>
                 <th>Fecha</th>
                 <th>Hora</th>
                 <th colspan="3">Opciones</th>
@@ -27,12 +28,11 @@
             <?php $__currentLoopData = $solicitudes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $solicitud): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
                 <th scope="row"><?php echo e($solicitud->id); ?></th>
+                <td><?php echo e($solicitud->descripcion); ?></td>
                 <td><?php echo e($solicitud->fecha); ?></td>
                 <td><?php echo e($solicitud->hora); ?></td>
                 <td><a class="btn btn-success" href="<?php echo e(route('solicitudes.show',$solicitud->id)); ?>" role="button">Ver</a></td>
-                <?php if(Auth::user()->rol=="Administrador"): ?>
-                <td><a class="btn btn-info" href="<?php echo e(route('solicitudes.edit',$solicitud->id)); ?>" role="button">Actualizar</a></td>
-                <?php endif; ?>
+
             </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>

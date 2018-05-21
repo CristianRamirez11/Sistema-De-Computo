@@ -12,6 +12,15 @@
         </article>
 
     <?php endif; ?>
+    <?php if($errors->any()): ?>
+    <div class="alert alert-danger">
+        <ul>
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </ul>
+    </div>
+<?php endif; ?>
     <?php echo Form::open(['route' => 'mantenimientos.store']); ?>
 
 
@@ -26,7 +35,7 @@
     <div class="form-group">
       <?php echo Form::label('codigo', 'Solicitud', ['for' => 'codigo']); ?>
 
-      <?php echo Form::select('idSolicitud',$solicitudes); ?>
+      <?php echo Form::select('codigo',$solicitudes); ?>
 
         <!--<label for="exampleInputEmail1">codigo</label>
         <input type="number" class="form-control" id="codigo"  placeholder="Ingrese codigo">

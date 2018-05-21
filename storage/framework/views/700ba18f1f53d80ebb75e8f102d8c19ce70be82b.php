@@ -4,10 +4,17 @@
     </br>
     <h2>Bienvenido a CRAL, <?php echo e(Auth::user()->name); ?></h2><br>
     <h3><p>A continuación encontrará las opciones disponibles del sistema:</p></h3>
-    <table class="table table-dark">
+    <?php if(Session::has('flash_message')): ?>
+        <article class="alert alert-success">
+              <?php echo e(Session::get('flash_message')); ?>
+
+        </article>
+
+    <?php endif; ?>
+    <table class="table table-dark table-responsive">
         <thead class="thead-dark">
             <tr>
-              
+
               <td>Informes de Mantenimiento</td>
               <td>Solicitudes</td>
               <td>Equipos</td>
@@ -26,7 +33,7 @@
             </tr>
             <tr>
 
-                <td><a href="<?php echo e(route('mantenimientos.index')); ?>" class="btn btn-outline-success">Crear informes</a></td>
+                <td><a href="<?php echo e(route('mantenimientos.create')); ?>" class="btn btn-outline-success">Crear informes</a></td>
 
 
 

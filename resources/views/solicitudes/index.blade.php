@@ -19,6 +19,7 @@
         <thead class="thead-inverse">
             <tr>
                 <th>#</th>
+                <th>Descripcion</th>
                 <th>Fecha</th>
                 <th>Hora</th>
                 <th colspan="3">Opciones</th>
@@ -28,12 +29,11 @@
             @foreach($solicitudes as $solicitud)
             <tr>
                 <th scope="row">{{$solicitud->id}}</th>
+                <td>{{$solicitud->descripcion}}</td>
                 <td>{{$solicitud->fecha}}</td>
                 <td>{{$solicitud->hora}}</td>
                 <td><a class="btn btn-success" href="{{route('solicitudes.show',$solicitud->id)}}" role="button">Ver</a></td>
-                @if(Auth::user()->rol=="Administrador")
-                <td><a class="btn btn-info" href="{{route('solicitudes.edit',$solicitud->id)}}" role="button">Actualizar</a></td>
-                @endif
+
             </tr>
             @endforeach
         </tbody>

@@ -61,6 +61,7 @@ Route::get('mantenimientos/mis/{id}', 'MantenimientoController@listMine')->name(
 //Solicitudes
 Route::resource('solicitudes','SolicitudesController');
 Route::get('solicitudes/mis/{id}', 'SolicitudesController@listMine')->name('solicitudes.listMine');
+Route::get('solicitudes/asignarTecnico/{id}', 'SolicitudesController@asignarTecnico')->name('solicitudes.asignarTecnico');
 
 //Admin
 Route::resource('admin','AdministradoresController');

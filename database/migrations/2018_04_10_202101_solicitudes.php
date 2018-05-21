@@ -18,7 +18,7 @@ class Solicitudes extends Migration
             $table->increments('id');
             $table->unsignedInteger('idCliente');
             $table->unsignedInteger('idEquipo');
-            $table->unsignedInteger('idTecnico');
+            $table->unsignedInteger('idTecnico')->nullable();
             $table->unsignedInteger('idMantenimiento')->nullable();
             $table->Enum('estado', ['pendiente', 'atendida'])->default('pendiente');
             $table->date('fecha');
