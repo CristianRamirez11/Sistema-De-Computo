@@ -10,7 +10,7 @@
 
         </article>
 
-    <?php endif; ?>  
+    <?php endif; ?>
     <table class="table table-responsive">
         <thead class="thead-inverse">
             <tr>
@@ -33,8 +33,8 @@
             </tr>
             <tr>
                 <td><a href="<?php echo e(route('admin.create')); ?>" class="btn btn-outline-success">Crear usuarios</a></td>
-                <td><a href="<?php echo e(route('mantenimientos.index')); ?>" class="btn btn-outline-success">Crear informes</a></td>
-                <td><a href="<?php echo e(route('solicitudes.index')); ?>" class="btn btn-outline-success">Crear solicitudes</a></td>
+                <td></td>
+                <td></td>
                 <td><a href="<?php echo e(route('equipos.index')); ?>" class="btn btn-outline-success">Añadir equipos</a></td>
                 <td><a href="<?php echo e(route('tecnicos.index')); ?>" class="btn btn-outline-success">Añadir tecnico</a></td>
                 <td><a href="<?php echo e(route('clientes.index')); ?>" class="btn btn-outline-success">Añadir cliente</a></td>

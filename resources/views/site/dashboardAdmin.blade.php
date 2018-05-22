@@ -11,7 +11,7 @@
               {{ Session::get('flash_message') }}
         </article>
 
-    @endif  
+    @endif
     <table class="table table-responsive">
         <thead class="thead-inverse">
             <tr>
@@ -34,8 +34,8 @@
             </tr>
             <tr>
                 <td><a href="{{route('admin.create')}}" class="btn btn-outline-success">Crear usuarios</a></td>
-                <td><a href="{{route('mantenimientos.index')}}" class="btn btn-outline-success">Crear informes</a></td>
-                <td><a href="{{route('solicitudes.index')}}" class="btn btn-outline-success">Crear solicitudes</a></td>
+                <td></td>
+                <td></td>
                 <td><a href="{{route('equipos.index')}}" class="btn btn-outline-success">Añadir equipos</a></td>
                 <td><a href="{{route('tecnicos.index')}}" class="btn btn-outline-success">Añadir tecnico</a></td>
                 <td><a href="{{route('clientes.index')}}" class="btn btn-outline-success">Añadir cliente</a></td>
